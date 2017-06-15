@@ -14,7 +14,7 @@ import os
 
 
 #project config
-
+COMPANY_NAME='Tangent Solutions'
 
 
 
