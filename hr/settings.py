@@ -14,13 +14,10 @@ import os
 
 
 #project config
-COMPANY_NAME='Tangent Solutions'
 LOGIN_REDIRECT_URL = 'index'
 
 
-
-
-
+# AUTH_USER_MODEL='leave.Employee'
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
