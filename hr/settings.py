@@ -15,6 +15,7 @@ import os
 
 #project config
 COMPANY_NAME='Tangent Solutions'
+LOGIN_REDIRECT_URL = 'index'
 
 
 
