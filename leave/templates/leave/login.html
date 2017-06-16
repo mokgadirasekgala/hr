@@ -1,6 +1,7 @@
 {% extends 'leave/base.html' %}
 
 
+
 {% block content %}
     <div class="jumbotron">
         <h1>Login</h1>
@@ -20,12 +21,11 @@
                 <form method="post" action="{% url 'login' %}">
                     {% csrf_token %}
                     <p>
-                        <label>Username</label>
-                        <input type="text" name="username">
+                        Username : {{ form.username }}
+
                     </p>
                     <p>
-                        <label>Password</label>
-                        <input type="password" name="password">
+                       password:{{ form.password }}
                     </p>
                     <button type="submit" class="btn btn-lg btn-primary">Login</button>
 

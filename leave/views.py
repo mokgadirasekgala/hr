@@ -47,11 +47,12 @@ def index(request):
 
 def log_leave(request):
     form = LogLeaveForm(request.POST)
+    emp = Employee.objects.get(username=request.user.username)
     if request.method=='POST':
         if form.is_valid():
             startdate=form.cleaned_data['startdate']
             enddate=form.cleaned_data['enddate']
-            emp=Employee.objects.get(username=request.user.username)
+
             validated=isValidLeavePrediod(emp.start_date,emp.leave_days_remaining,startdate,enddate)
             if validated[0]:
                 messages.success(request,'Leave Logged for Approval')
@@ -67,7 +68,7 @@ def log_leave(request):
 
     else:
         context={
-            'employee': 'Mokgadi',
+            'employee': emp,
             'form':form
         }
         return render(request, 'leave/leave.html', context)

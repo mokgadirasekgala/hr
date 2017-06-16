@@ -16,9 +16,10 @@ Including another URLconf
 """
 from django.conf.urls import url,include
 #from django.contrib import admin
+from leave.forms import LoginForm
 
 urlpatterns = [
     #url(r'^admin/', admin.site.urls),
     url(r'^', include('leave.urls')),
-    url(r'^login/$', views.login, {'template_name': 'leave/login.html'}, name='login'),
+    url(r'^login/$', views.login, {'template_name': 'leave/login.html','authentication_form': LoginForm}, name='login'),
 ]
