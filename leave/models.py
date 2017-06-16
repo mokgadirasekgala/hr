@@ -17,6 +17,7 @@ class Leave(models.Model):
     start_date = models.DateField()
     end_date=models.DateField()
     status=models.CharField(max_length=10,default='New', choices=STATUSES)
+    employee_username=models.CharField(max_length=30, default="old")
 
     @property
     def days_of_leave(self):

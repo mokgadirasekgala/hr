@@ -17,14 +17,7 @@
 
     <form method="post" action="{% url 'logleave' %}">
         {% csrf_token %}
-        <p>
-            <label for="startdate">Start Date</label>
-            <input id="stardate" type="text" name="startdate" >
-        </p>
-        <p>
-            <label for="enddate">End Date</label>
-            <input id="enddate" type="text" name="enddate">
-        </p>
+        Start Date:{{ form.start_date }}&nbsp;&nbsp; End Date:{{ form.end_date }}<br/>
         <button type="submit">Request Leave</button>
     </form>
 

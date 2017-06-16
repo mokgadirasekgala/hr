@@ -1,5 +1,7 @@
 from django import forms
+from functools import partial
+DateInput = partial(forms.DateInput, {'class': 'datepicker'})
 
 class LogLeaveForm(forms.Form):
-    startdate = forms.CharField(label='startdate', max_length=100)
-    enddate=forms.CharField(label='enddate', max_length=100)
+    startdate = forms.DateField( widget=DateInput())
+    enddate=forms.DateField(widget=DateInput() )

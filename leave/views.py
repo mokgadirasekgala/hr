@@ -2,14 +2,12 @@ from leave.models import Leave, Employee
 from django.shortcuts import render
 from django.shortcuts import redirect
 import datetime
-from datetime import timedelta
-from django.http import HttpResponseRedirect
-from django.urls import reverse
+from .forms import LogLeaveForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
 
-def create_employee(request):
+def create_employee(request): #for hr admin
     if request.method == 'POST':
         username = request.POST['username']
         password=request.POST['password']
@@ -35,11 +33,11 @@ def index(request):
 
 
 def log_leave(request):
+    form = LogLeaveForm(request.POST)
     if request.method=='POST':
-        perfect=False
-        startdate=request.POST['startdate']
-        enddate=request.POST['enddate']
-        if perfect:
+        if form.is_valid():
+            startdate=form.cleaned_data['startdate']
+            enddate=form.cleaned_data['enddate']
             messages.success(request,"Leave logged")
             return redirect('/')
         else:
@@ -49,6 +47,6 @@ def log_leave(request):
         context={
             'employee': 'Mokgadi'
         }
-        return render(request, 'leave/leave.html', context)
+        return render(request, 'leave/leave.html', context,{'form':form})
 
 
