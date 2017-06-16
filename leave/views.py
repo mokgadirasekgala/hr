@@ -15,7 +15,7 @@ def create_employee(request): #for hr admin
         email=request.POST['email']
         firstname=request.POST['firstname']
         lastname=request.POST['lastname']
-        emp = Employee.objects.create_user(username=username, password=password, email=email, first_name=firstname,last_name=lastname, start_date=datetime.date.today())
+        emp = Employee.objects.create_user(username=username, password=password, email=email, first_name=firstname,last_name=lastname, start_date=datetime.date(2017,1,1))
         messages.success(request, "New Employee Created by Admin. Let the Employee login")
         return redirect('login')
     else:

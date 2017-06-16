@@ -44,9 +44,10 @@ def monthdelta(d1, d2):
 
 def ProbationPeriodOver(work_startdate,leave_startdate):
     over= True
-    months_worked=monthdelta(leave_startdate,work_startdate)
+    months_worked=monthdelta(work_startdate,leave_startdate)
     if months_worked<3:
         over=False
+    return over
 
 def validDatePeriod(start_date,end_date):
     #from to start logical
