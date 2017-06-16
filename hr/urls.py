@@ -1,3 +1,4 @@
+from django.contrib.auth import views
 """hr URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -18,5 +19,6 @@ from django.conf.urls import url,include
 
 urlpatterns = [
     #url(r'^admin/', admin.site.urls),
-    url(r'^', include('leave.urls'))
+    url(r'^', include('leave.urls')),
+    url(r'^login/$', views.login, {'template_name': 'leave/login.html'}, name='login'),
 ]

@@ -65,7 +65,7 @@ ROOT_URLCONF = 'hr.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['leave/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

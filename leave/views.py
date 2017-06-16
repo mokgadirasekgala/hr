@@ -14,29 +14,25 @@ def trial(request):
     # leave.save()
     # myleave = Leave.objects.all()
 
-    Employee.objects.all().delete()
-    emp = Employee(username='modizzzle', password='pass123', email="rasekgalam@gmail.com", first_name='Mokgadi',
-                   last_name='Rasekgala', start_date=datetime.date.today())
-    user=User.objects.all()
-    emp.save()
-    myemp = Employee.objects.all()
-    print user[0]
-
-    context = {
-               # 'start': myleave[0].start_date,
-               # 'days': myleave[0].days_of_leave,
-               'found_user':user[0].username,
-               'found_user_pass': user[0].password,
-               'left_days': myemp[0].leave_days_remaining,
-               'emp_name':myemp[0].first_name + myemp[0].last_name
-              }
-
-    return render(request, 'leave/trial.html', context)
+    # Employee.objects.all().delete()
+    # user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
+    # user.save()
+    emp = Employee.objects.create_user(username='kkk', password='pass', email="rasekgalam@gmail.com", first_name='Mokgadi',last_name='Rasekgala', start_date=datetime.date.today())
+    # emp.save()
+    print "saved"
+    found=User.objects.get(username='lll')
+    print found.email
+    print found.username
+    print found.password
+    # emp=Employee(user=user))
+    # emp.save()
+    # myemp = Employee.objects.all()
+    # User.objects.all().delete()
+    #User.objects.create_superuser(username='admin1', password='123', email='')
+    return render(request, 'leave/trial.html')
 
 
 
-
-@login_required(login_url="logdddin")
 
 
 # def login_post(request):
@@ -45,7 +41,7 @@ def trial(request):
 #     user = authenticate(request, username=username, password=password)
 #     if user is not None:
 #         login(request, user)
-
+@login_required(login_url="login/")
 def index(request):
     #if no session back to login
     #else -basic dashboard

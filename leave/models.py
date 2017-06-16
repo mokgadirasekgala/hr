@@ -4,7 +4,7 @@ from django.conf import settings
 from django.db import models
 import datetime
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
+
 
 from django.contrib.auth import get_user_model as user_model
 
@@ -23,7 +23,6 @@ class Leave(models.Model):
         return self.end_date-self.start_date
 
 class Employee(User):
-    user=models.OneToOneField(User,on_delete=models.CASCADE)
     start_date = models.DateField()
 
     @property
