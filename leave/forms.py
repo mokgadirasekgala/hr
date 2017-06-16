@@ -1,6 +1,6 @@
 from django import forms
 from functools import partial
-from django.contrib.auth.forms import AuthenticationForm 
+from django.contrib.auth.forms import AuthenticationForm
 DateInput = partial(forms.DateInput, {'class': 'datepicker'})
 
 class LogLeaveForm(forms.Form):

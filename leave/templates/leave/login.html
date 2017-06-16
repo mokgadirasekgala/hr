@@ -8,12 +8,16 @@
             {% if form.errors %}
                 <p>{{ form.errors }}Your username and password didn't match. Please try again.</p>
             {% endif %}
+    
 
 
             {% if messages %}
                   <ul class="messages">
                     {% for message in messages %}
-                      <li class="{{ message.tags }}">{{ message }}</li>
+                      <div class="alert alert-{{message.tags}}" role="alert">
+                        <li class="">{{ message }}</li>
+                      </div>
+
                     {% endfor %}
                   </ul>
             {% endif %}
