@@ -1,6 +1,6 @@
 {% extends 'leave/base.html' %}
 {% block content %}
-    LEAVE DASHBOARD
+    <h2>LEAVE DASHBOARD<h2>
 
     {% if messages %}
           <ul class="messages">
@@ -9,6 +9,11 @@
             {% endfor %}
           </ul>
     {% endif %}
+
+    <h3>Hi {{ username }}</h3>
+    <p>{{ first_name}} {{last_name}}</p>
+
+     <a href="leave">REQUEST A NEW LEAVE</a>
 
     {% if leave_requests %}
         <ul class="requests">
@@ -21,6 +26,7 @@
         </ul>
     {% endif %}
 
-    {{ username }}
-    <p>{{ first_name}} {{last_name}}</p>
+
+
+
 {% endblock %}
