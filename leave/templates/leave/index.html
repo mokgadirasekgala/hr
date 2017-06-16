@@ -13,20 +13,42 @@
     {% endif %}
 
     <h3>Hi {{ username }}</h3>
+    <p>{{ days_remaining }} leave days remaining </p>  <a href="leave">REQUEST A NEW LEAVE</a>
     <p>{{ first_name}} {{last_name}}</p>
 
-     <p>{{ days_remaining }} leave days remaining </p>  <a href="leave">REQUEST A NEW LEAVE</a>
+    <div class="page-header">
+        <h1>Leave Requests</h1>
+    </div>
 
     {% if leave_requests %}
-        <ul class="requests">
-            {% for request in leave_requests  %}
-                <li >
-                {{request.start_date  }}
-                </li>
-            {% endfor %}
+        <div class="row">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for request in leave_requests %}
+                  <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ request.start_date }}</td>
+                    <td>{{ request.end_date }}</td>
+                    <td>{{ request.status }}</td>
+                  </tr>
+                  {% endfor %}
 
-        </ul>
+                </tbody>
+            </table>
+        </div>
     {% endif %}
+
+
+
+
 
 
 
