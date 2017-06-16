@@ -2,7 +2,9 @@
 
 {% block content %}
 
-
+    <div class="jumbotron">
+    <h1>Request Leave</h1>
+    </div>
     {% if messages %}
           <ul class="messages">
             {% for message in messages %}
@@ -11,12 +13,26 @@
           </ul>
     {% endif %}
 
+    <div class="form-group row">
+        <form method="post" action="{% url 'logleave' %}">
+            {% csrf_token %}
+            <div clas="row">
+                <div class="col-md-6">
+                    Start Date:{{ form.startdate }}
+                </div>
+                <div class="col-md-6">
+                    End Date:{{ form.enddate }}
+                </div>
+            </div>
 
-    <form method="post" action="{% url 'logleave' %}">
-        {% csrf_token %}
-        Start Date:{{ form.startdate }}&nbsp;&nbsp; End Date:{{ form.enddate }}<br/>
-        <button type="submit">Request Leave</button>
-    </form>
+            <div clas="row">
+               <button type="submit">Request Leave</button>
+            </div>
+
+
+        </form>
+    </div>
+
 
     <a href="/">BACK TO DASHBOARD</a>
 

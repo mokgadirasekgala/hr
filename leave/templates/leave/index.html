@@ -1,8 +1,13 @@
 {% extends 'leave/base.html' %}
 {% block content %}
     <div class="jumbotron">
-    <h1>Dashboard<h1>
+        <h1>Dashboard<h1>
+
+        <h2><p>{{ first_name}} {{last_name}}</p> </h2>
     </div>
+
+
+
 
     {% if messages %}
           <ul class="messages">
@@ -13,8 +18,8 @@
     {% endif %}
 
     <h3>Hi {{ username }}</h3>
-    <p>{{ days_remaining }} leave days remaining </p>  <a href="leave">REQUEST A NEW LEAVE</a>
-    <p>{{ first_name}} {{last_name}}</p>
+    <p>{{ days_remaining }} leave days remaining </p>
+    <a  class="label label-default"  href="leave">REQUEST NEW LEAVE</a>
 
     <div class="page-header">
         <h1>Leave Requests</h1>
