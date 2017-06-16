@@ -10,6 +10,17 @@
           </ul>
     {% endif %}
 
+    {% if leave_requests %}
+        <ul class="requests">
+            {% for request in leave_requests  %}
+                <li >
+                {{request.start_date  }}
+                </li>
+            {% endfor %}
+
+        </ul>
+    {% endif %}
+
     {{ username }}
     <p>{{ first_name}} {{last_name}}</p>
 {% endblock %}

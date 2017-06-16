@@ -30,7 +30,10 @@ def create_employee(request): #for hr admin
 
 @login_required(login_url="login/")
 def index(request):
+    leave_requests=Leave.objects.filter(employee_username=request.user.username)
+    print len(leave_requests)
     context = {
+        'leave_requests':leave_requests,
         'username': request.user.username,
         'first_name':request.user.first_name,
         'last_name':request.user.last_name
