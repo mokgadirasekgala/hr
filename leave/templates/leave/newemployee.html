@@ -1,0 +1,48 @@
+{% extends 'leave/base.html' %}
+
+{% block content %}
+    <h1>HR Admin Use Only </h1>
+
+    {% if form.errors %}
+            <p>{{ form.errors }}</p>
+    {% endif %}
+
+    {% if messages %}
+          <ul class="messages">
+            {% for message in messages %}
+              <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+          </ul>
+    {% endif %}
+
+
+    <form method="post" action="{% url 'createemployee' %}">
+        {% csrf_token %}
+        <p>
+            <label for="username">Username</label>
+            <input id="username" type="text" name="username" >
+        </p>
+        <p>
+            <label for="firstname">First Name</label>
+            <input id="firstname" type="text" name="firstname">
+        </p>
+        <p>
+            <label for="lastname">Last Name</label>
+            <input id="lastname" type="text" name="lastname">
+        </p>
+        <p>
+            <label for="email">Email </label>
+            <input id="email" type="email" name="email">
+        </p>
+        <p>
+            <label for="password">Password</label>
+            <input id="password" type="password" name="password">
+        </p>
+        <p>
+            <label for="startdate">Start Date</label>
+            <input id="startdate" type="password" name="startdate">
+        </p>
+        <button type="submit">Create Employee</button>
+    </form>
+
+{% endblock %}

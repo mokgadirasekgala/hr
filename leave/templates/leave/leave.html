@@ -1,4 +1,31 @@
 {% extends 'leave/base.html' %}
+
 {% block content %}
-    REQUEST LEAVE
+
+    {% if form.errors %}
+            <p>{{ form.errors }}</p>
+    {% endif %}
+
+    {% if messages %}
+          <ul class="messages">
+            {% for message in messages %}
+              <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+          </ul>
+    {% endif %}
+
+
+    <form method="post" action="{% url 'logleave' %}">
+        {% csrf_token %}
+        <p>
+            <label for="startdate">Start Date</label>
+            <input id="stardate" type="text" name="startdate" >
+        </p>
+        <p>
+            <label for="enddate">End Date</label>
+            <input id="enddate" type="text" name="enddate">
+        </p>
+        <button type="submit">Request Leave</button>
+    </form>
+
 {% endblock %}

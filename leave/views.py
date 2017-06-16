@@ -1,61 +1,54 @@
 from leave.models import Leave, Employee
 from django.shortcuts import render
+from django.shortcuts import redirect
 import datetime
 from datetime import timedelta
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib import messages
+
+def create_employee(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password=request.POST['password']
+        email=request.POST['email']
+        firstname=request.POST['firstname']
+        lastname=request.POST['lastname']
+        emp = Employee.objects.create_user(username=username, password=password, email=email, first_name=firstname,last_name=lastname, start_date=datetime.date.today())
+        messages.success(request, "New Employee Created by Admin. Let the Employee login")
+        return redirect('login')
+    else:
+        return render(request, 'leave/newemployee.html')
 
 
-def trial(request):
-    # Only for testing purposes. Will be removed
-    # Leave.objects.all().delete()
-    # dt = timedelta(days=2)
-    # leave = Leave(start_date=datetime.date.today(), end_date=datetime.date.today() + dt)
-    # leave.save()
-    # myleave = Leave.objects.all()
-
-    # Employee.objects.all().delete()
-    # user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
-    # user.save()
-    emp = Employee.objects.create_user(username='kkk', password='pass', email="rasekgalam@gmail.com", first_name='Mokgadi',last_name='Rasekgala', start_date=datetime.date.today())
-    # emp.save()
-    print "saved"
-    found=User.objects.get(username='lll')
-    print found.email
-    print found.username
-    print found.password
-    # emp=Employee(user=user))
-    # emp.save()
-    # myemp = Employee.objects.all()
-    # User.objects.all().delete()
-    #User.objects.create_superuser(username='admin1', password='123', email='')
-    return render(request, 'leave/trial.html')
-
-
-
-
-
-# def login_post(request):
-#     username = request.POST['username']
-#     password = request.POST['password']
-#     user = authenticate(request, username=username, password=password)
-#     if user is not None:
-#         login(request, user)
 @login_required(login_url="login/")
 def index(request):
-    #if no session back to login
-    #else -basic dashboard
-
     context = {
-        'employee': 'Mokgadi'
-
+        'username': request.user.username,
+        'first_name':request.user.first_name,
+        'last_name':request.user.last_name
     }
     return render(request,'leave/index.html',context)
 
 
 
 def log_leave(request):
-    context={
-        'employee': 'Mokgadi'
-    }
-    return render(request, 'leave/leave.html', context)
+    if request.method=='POST':
+        perfect=False
+        startdate=request.POST['startdate']
+        enddate=request.POST['enddate']
+        if perfect:
+            messages.success(request,"Leave logged")
+            return redirect('/')
+        else:
+            messages.error(request,'Cant Sorry ')
+            return redirect('/leave')
+    else:
+        context={
+            'employee': 'Mokgadi'
+        }
+        return render(request, 'leave/leave.html', context)
+
+
