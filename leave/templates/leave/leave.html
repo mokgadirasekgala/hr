@@ -2,9 +2,6 @@
 
 {% block content %}
 
-    {% if form.errors %}
-            <p>{{ form.errors }}</p>
-    {% endif %}
 
     {% if messages %}
           <ul class="messages">
@@ -17,8 +14,16 @@
 
     <form method="post" action="{% url 'logleave' %}">
         {% csrf_token %}
-        Start Date:{{ form.start_date }}&nbsp;&nbsp; End Date:{{ form.end_date }}<br/>
+        Start Date:{{ form.startdate }}&nbsp;&nbsp; End Date:{{ form.enddate }}<br/>
         <button type="submit">Request Leave</button>
     </form>
 
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        $(document).ready(function() {
+            $('.datepicker').datepicker();
+        });
+    </script>
 {% endblock %}

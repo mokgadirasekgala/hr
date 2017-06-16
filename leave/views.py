@@ -6,6 +6,7 @@ from .forms import LogLeaveForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
+from .datehelpers import isValidLeavePrediod
 
 def create_employee(request): #for hr admin
     if request.method == 'POST':
@@ -38,15 +39,25 @@ def log_leave(request):
         if form.is_valid():
             startdate=form.cleaned_data['startdate']
             enddate=form.cleaned_data['enddate']
-            messages.success(request,"Leave logged")
-            return redirect('/')
+            emp=Employee.objects.get(username=request.user.username)
+            validated=isValidLeavePrediod(emp.start_date,emp.leave_days_remaining,startdate,enddate)
+            if validated[0]:
+                messages.success(request,'Leave Logged for Approval')
+                return redirect('/')
+            else:
+                leave=Leave.objects.create(start_date=startdate,end_date=enddate,employee_username=request.user.username)
+                messages.error(request,validated[1])
+                return redirect('/leave')
         else:
-            messages.error(request,'Cant Sorry ')
+            messages.error(request, "Something wrong with the details entered, try again ")
             return redirect('/leave')
+
+
     else:
         context={
-            'employee': 'Mokgadi'
+            'employee': 'Mokgadi',
+            'form':form
         }
-        return render(request, 'leave/leave.html', context,{'form':form})
+        return render(request, 'leave/leave.html', context)
 
 
