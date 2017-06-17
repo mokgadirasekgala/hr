@@ -53,7 +53,7 @@ class Employee(User):
     def leave_days_remaining_at_date(self,atDate):
         years_working=relativedelta(atDate, self.start_date).years
         months = relativedelta(atDate, self.start_date).months
-        
+
 
         total_months=(years_working*12) +months
         return leave_day_at_n_months(total_months,self)
