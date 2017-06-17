@@ -10,7 +10,7 @@ def days_on_leave_count(start,end):
 	total_days=(end-start).days +1
 	oneday=timedelta(days=1)
 	current_date=start
-	for i in range(0,total_days+1):
+	while current_date<=end:
 		if current_date.weekday()>=5 or (current_date.day,current_date.month) in public_holidays: #day is weekend or public holiday
 			total_days-=1
 		current_date+=oneday

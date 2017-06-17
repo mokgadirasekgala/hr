@@ -55,6 +55,7 @@ def log_leave(request):
             startdate=form.cleaned_data['startdate']
             enddate=form.cleaned_data['enddate']
             validated=emp.isPreApproved(startdate,enddate)
+            print validated
             if validated[0]:
                 leave = Leave.objects.create(start_date=startdate, end_date=enddate,employee_username=request.user.username)
                 messages.success(request,'Leave Logged for Approval')
