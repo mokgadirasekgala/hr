@@ -40,7 +40,8 @@ def index(request):
         'leave_requests':leave_requests,
         'username': emp.username,
         'first_name':emp.first_name,
-        'last_name':emp.last_name
+        'last_name':emp.last_name,
+        'start_date':emp.start_date
     }
     return render(request,'leave/index.html',context)
 

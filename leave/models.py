@@ -112,7 +112,8 @@ def leave_day_at_n_months(n,employee):
     # if current=0
     # leave_days(n)=0
     # next month continue as above leave_days(n)=1.5+leave_days(n-1)-taken(n)
-
+    if n==0:
+        return 0
     if n==1:
         return 1.5-employee.taken(1)
     elif n % 12==0:
