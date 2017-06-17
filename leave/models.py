@@ -63,11 +63,13 @@ class Employee(User):
 
 
         total_months=(years_working*12) +months
-        remaining=leave_day_at_n_months(total_months,self)
 
+        remaining=leave_day_at_n_months(total_months,self)
         #you could have taken leave in the last days before the month ends
+        print remaining
         delta=timedelta(days=-days)
         extra_leave_days=self.days_taken_in_interval(atDate+delta,atDate)
+
 
         return remaining-extra_leave_days
 

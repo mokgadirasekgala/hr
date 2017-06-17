@@ -29,15 +29,18 @@ def create_employee(request): #for hr admin
 
 @login_required(login_url="login/")
 def index(request):
-
-    leave_requests=Leave.objects.filter(employee_username=request.user.username)
+    leave_requests=Leave.objects.filter(employee_username=request.user.username).order_by('-start_date')
     emp = Employee.objects.get(username=request.user.username)
+    print leave_requests[0].start_date
     if len(leave_requests)==0:
         leave_requests=None
+        future=emp.leave_days_remaining()
+
 
     context = {
         'leave_requests':leave_requests,
         'today':datetime.date.today(),
+        'furture_leave_remaining':emp.leave_days_remaining_at_date(leave_requests[0].start_date),
         'emp': emp,
     }
     return render(request,'leave/index.html',context)

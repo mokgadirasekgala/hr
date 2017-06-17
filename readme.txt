@@ -1,5 +1,5 @@
 ASSUMPTIONS
-1. You can book a leave for a date before current date (For example if you were sick and therefore went oon leave without booking leave)
+1. You cannot book leave  for a date before current date
 
 
 
