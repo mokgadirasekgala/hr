@@ -42,7 +42,7 @@ class Employee(User):
                                            start_date__lt=period_end)
         days = 0
         for leave in leave_taken:
-            days += leave.days_of_leave
+            days += leave.days_of_leave()
         return days
 
 
