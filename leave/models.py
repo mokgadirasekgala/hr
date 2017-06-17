@@ -64,6 +64,20 @@ class Employee(User):
 
 
 
+    @property
+    def isOnProbationAtDate(self,atDate):
+        probation = True
+        months_working = relativedelta(atDate, self.start_date).months
+        if months_working >= 3:
+            probation = False
+        return probation
+
+    @property
+    def isOnProbation(self):
+        return self.isOnProbationAtDate(datetime.date.today())
+
+
+
 def leave_day_at_n_months(n,employee):
     # leave_days(n) -> recursive function giving leave days at the end of n months
     # taken(n) -> The number of days leave days taken in the period of  nth month since working

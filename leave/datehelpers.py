@@ -16,17 +16,15 @@ def days_on_leave_count(start,end):
 		current_date+=oneday
 	return total_days
 
-def isValidLeavePrediod(emp,start_date,end_date):
+def isValidLeavePrediod(start_date,end_date):
     valid=True
     message="Valid"
-    # Valid leave : valid dateperiod, Enough Days, not on probation
+    #Valid leavePeriod-> valid dateperiod
 
     #date from to start end in right order
     #not earlier than current date
     #start and end not on weekend
-    if OnProbation(work_start_date,start_date):
-        valid=False
-        message="You wouldn't have worked for three months at the time of your leave"
+ 
 
     if start_date > end_date:
         valid=False
@@ -42,21 +40,7 @@ def isValidLeavePrediod(emp,start_date,end_date):
         valid=False
         messae="Leave can't start or end on a weekend day"
 
-    if not daysAvailable(remaining_days,start_date,end_date):
-        valid=False
-        message="You do not have enough days for the requested period"
-
-
     return (valid,message)
-
-
-def OnProbation(work_start_date,leave_start_date):
-    probation=True
-    months_working = relativedelta(leave_start_date, work_start_date).months
-    if months_working>=3:
-        probation=False
-    return probation
-
 
 
 def daysAvailable(remaining_days,start_date,end_date):
