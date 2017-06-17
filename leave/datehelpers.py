@@ -1,6 +1,8 @@
 from calendar import monthrange
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
+from models import Leave
+
 
 
 def days_on_leave_count(start,end):
@@ -14,7 +16,7 @@ def days_on_leave_count(start,end):
 		current_date+=oneday
 	return total_days
 
-def isValidLeavePrediod(work_start_date,remaining_days,start_date,end_date):
+def isValidLeavePrediod(emp,start_date,end_date):
     valid=True
     message="Valid"
     # Valid leave : valid dateperiod, Enough Days, not on probation
