@@ -1,3 +1,5 @@
+
+
 from __future__ import unicode_literals
 
 from django.conf import settings
@@ -5,9 +7,7 @@ from django.db import models
 import datetime
 from django.contrib.auth.models import User
 from dateutil.relativedelta import relativedelta
-
-
-from django.contrib.auth import get_user_model as user_model
+from datehelpers import days_on_leave_count
 
 class Leave(models.Model):
     STATUSES=(
@@ -22,7 +22,12 @@ class Leave(models.Model):
 
     @property
     def days_of_leave(self):
-        return self.end_date-self.start_date
+        return days_on_leave_count(self.start_date,self.end_date)
+
+
+
+
+
 
 class Employee(User):
     start_date = models.DateField()
@@ -45,10 +50,18 @@ class Employee(User):
 
         if years_working==0 and months<3:#less than 3 months in new cycle
            return 0
-        if years_working>=1: #working for a year or more, have 18 in your current cycle
-            current_cycle_days=18
-        if years_working>=2: #working for 2 leave cycles, accumulated 5 from last year
-            accumulated=5
+        if years_working==1: #working for a year not yet 2 years, would have only accumulated 18 days
+            accumulated= 18
+        if years_working>=2: #working for 2 leave cycles, must back track to see if there was accumulation
+            for i in range(2,years_working):
+
+
+            leave_taken=Leave.objects.filter(employee_username=self.username)
+            for leave in leave_taken:
+
+
+
+
 
         #deduct days taken
             #for every Leave with employee_usernme=thisemployee taken in current cycle
