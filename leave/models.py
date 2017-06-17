@@ -7,6 +7,7 @@ from django.db import models
 import datetime
 from django.contrib.auth.models import User
 from dateutil.relativedelta import relativedelta
+from datetime import timedelta
 from datehelpers import days_on_leave_count,daysAreAvailable,isValidDatePrediod
 
 class Leave(models.Model):
@@ -31,32 +32,46 @@ class Employee(User):
 
     def get_month_interval(self,n):
         # get tuple giving start and end date on the nth month of employee working
-        print self.start_date
         s = relativedelta(months=n - 1)
         e = relativedelta(months=n)
         return (self.start_date + s, self.start_date + e)
 
+    def days_taken_in_interval(self,period_start,period_end):
+        #days of leave taken from start date to end
+        leave_taken = Leave.objects.filter(employee_username=self.username, start_date__gte=period_start,
+                                           start_date__lt=period_end)
+        days = 0
+        for leave in leave_taken:
+            days += leave.days_of_leave
+        return days
+
 
     def taken(self,n):
-        #number of leave, days taken by employee in the nth month since working
+        #number of leave days taken by employee in the nth month interval since working
         #if the start date of a leave is in the nth month and the end date in the kth month, the leave is taken in the nth month
         period=self.get_month_interval(n)
         period_start=period[0]
         period_end=period[1]
-        leave_taken=Leave.objects.filter(employee_username=self.username,start_date__gte=period_start,start_date__lt=period_end)
-        days=0
-        for leave in leave_taken:
-            days+=leave.days_of_leave
-        return days
+
+        return self.days_taken_in_interval(period_start,period_end)
 
 
     def leave_days_remaining_at_date(self,atDate):
         years_working=relativedelta(atDate, self.start_date).years
-        months = relativedelta(atDate, self.start_date).months
+        months = relativedelta(atDate, self.start_date).months #months working excluding years
+        days= relativedelta(atDate, self.start_date).days
 
 
         total_months=(years_working*12) +months
-        return leave_day_at_n_months(total_months,self)
+        remaining=leave_day_at_n_months(total_months,self)
+
+        #you could have taken leave in the last days before the month ends
+        delta=timedelta(days=-days)
+        extra_leave_days=self.days_taken_in_interval(atDate+delta,atDate)
+
+        return remaining-extra_leave_days
+
+
 
     def leave_days_remaining(self):
         return self.leave_days_remaining_at_date(datetime.date.today())

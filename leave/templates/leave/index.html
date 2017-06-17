@@ -3,9 +3,10 @@
     <div class="jumbotron">
         <h1>Dashboard<h1>
 
-        <h2>{{ first_name}} {{last_name}}</h2>
+        <h2>{{ emp.first_name}} {{emp.last_name}}</h2>
 
-        <h3>Employee since {{start_date}}</h3>
+        <h3>Employee since {{emp.start_date}}</h3>
+           Today' date: <p>{{ today }}</p>
 
     </div>
 
@@ -20,8 +21,9 @@
           </ul>
     {% endif %}
 
-    <h3>Hi {{ username }}</h3>
-    <p>{{ days_remaining }} leave days remaining </p>
+    <h3>Hi {{ emp.username }}</h3>
+    <p>{{ emp.leave_days_remaining }} leave days remaining  Currently</p>
+    <p>{{ emp.future_remaining_leave_days}} leave days remaining  if all requested future leaves are taken</p>
     <a  class="label label-default"  href="leave">REQUEST NEW LEAVE</a>
 
     <div class="page-header">

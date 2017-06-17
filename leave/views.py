@@ -36,12 +36,9 @@ def index(request):
         leave_requests=None
 
     context = {
-        'days_remaining':emp.leave_days_remaining(),
         'leave_requests':leave_requests,
-        'username': emp.username,
-        'first_name':emp.first_name,
-        'last_name':emp.last_name,
-        'start_date':emp.start_date
+        'today':datetime.date.today(),
+        'emp': emp,
     }
     return render(request,'leave/index.html',context)
 
