@@ -6,7 +6,6 @@ from .forms import LogLeaveForm, CreateEmployeeForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
-from .datehelpers import isValidLeavePrediod
 
 def create_employee(request): #for hr admin
     form=CreateEmployeeForm(request.POST)
