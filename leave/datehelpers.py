@@ -16,7 +16,7 @@ def days_on_leave_count(start,end):
 		current_date+=oneday
 	return total_days
 
-def isValidLeavePrediod(start_date,end_date):
+def isValidDatePrediod(start_date,end_date):
     valid=True
     message="Valid"
     #Valid leavePeriod-> valid dateperiod
@@ -24,7 +24,6 @@ def isValidLeavePrediod(start_date,end_date):
     #date from to start end in right order
     #not earlier than current date
     #start and end not on weekend
- 
 
     if start_date > end_date:
         valid=False
@@ -43,7 +42,7 @@ def isValidLeavePrediod(start_date,end_date):
     return (valid,message)
 
 
-def daysAvailable(remaining_days,start_date,end_date):
+def daysAreAvailable(remaining_days,start_date,end_date):
     available=True
     leave_days=days_on_leave_count(start_date,end_date)
     if leave_days>remaining_days:

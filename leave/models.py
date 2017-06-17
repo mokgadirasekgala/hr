@@ -7,7 +7,7 @@ from django.db import models
 import datetime
 from django.contrib.auth.models import User
 from dateutil.relativedelta import relativedelta
-from datehelpers import days_on_leave_count
+from datehelpers import days_on_leave_count,daysAreAvailable,isValidDatePrediod
 
 class Leave(models.Model):
     STATUSES=(
@@ -75,6 +75,26 @@ class Employee(User):
     @property
     def isOnProbation(self):
         return self.isOnProbationAtDate(datetime.date.today())
+
+    def isPreApproved(self,start_date,end_date):
+        #returns tuple giving approved boolean and reason
+        #leave requested meets condition will be accepted to be approved later
+        #is not on Probation
+        #Has enough leave days
+        #valid date period
+        approved=True
+        reason="You meet requiremnts, Leave sent through to manager for approval"
+        validPeriod=isValidDatePrediod(start_date,end_date)
+        if not validPeriod[0]:
+            return (False,validPeriod[1])
+        if self.isOnProbationAtDate(start_date):
+            return(False,"You will still be on probation on leave date")
+        if not daysAreAvailable(self.leave_days_remaining_at_date(start_date),start_date,end_date):
+            return (False,"You do not have enough days")
+        return (approved,reason)
+
+
+
 
 
 
