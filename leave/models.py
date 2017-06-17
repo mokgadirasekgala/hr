@@ -35,29 +35,30 @@ class Employee(User):
     def leave_days_remaining(self):
         #18 days at the end of each year
         #no leave within first three months of cycle
-        #5 days carried over from previous cycle
-
-        accumulated=0
-        current_cycle_days=0
-        total_days=0
-
-        current_date = datetime.date.today()
-        years_working = relativedelta(current_date, self.start_date).years
-        months = relativedelta(current_date, self.start_date).months #number of months into new cycle
-
-        print "Years" ,years_working
-        print "Months", months
-
-        if years_working==0 and months<3:#less than 3 months in new cycle
-           return 0
-        if years_working==1: #working for a year not yet 2 years, would have only accumulated 18 days
-            accumulated= 18
-        if years_working>=2: #working for 2 leave cycles, must back track to see if there was accumulation
-            for i in range(2,years_working):
-
-
-            leave_taken=Leave.objects.filter(employee_username=self.username)
-            for leave in leave_taken:
+        # #5 days carried over from previous cycle
+        #
+        # accumulated=0
+        # current_cycle_days=0
+        # total_days=0
+        #
+        # current_date = datetime.date.today()
+        # years_working = relativedelta(current_date, self.start_date).years
+        # months = relativedelta(current_date, self.start_date).months #number of months into new cycle
+        #
+        # print "Years" ,years_working
+        # print "Months", months
+        #
+        # if years_working==0 and months<3:#less than 3 months in new cycle
+        #    return 0
+        # if years_working==1: #working for a year not yet 2 years, would have only accumulated 18 days
+        #     accumulated= 18
+        # if years_working>=2: #working for 2 leave cycles, must back track to see if there was accumulation
+        #     for i in range(2,years_working):
+        #
+        #
+        #     leave_taken=Leave.objects.filter(employee_username=self.username)
+        #     for leave in leave_taken:
+        return 10
 
 
 
