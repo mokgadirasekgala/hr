@@ -58,7 +58,7 @@ class Employee(User):
 
     def leave_days_remaining(self):
         self.leave_days_remaining_at_date(datetime.date.today())
- 
+
 
 
     def isOnProbationAtDate(self,atDate):
