@@ -53,10 +53,10 @@ def log_leave(request):
             enddate=form.cleaned_data['enddate']
             validated=emp.isPreApproved(startdate,enddate)
             if validated[0]:
+                leave = Leave.objects.create(start_date=startdate, end_date=enddate,employee_username=request.user.username)
                 messages.success(request,'Leave Logged for Approval')
                 return redirect('/')
             else:
-                leave=Leave.objects.create(start_date=startdate,end_date=enddate,employee_username=request.user.username)
                 messages.error(request,validated[1])
                 return redirect('/leave')
         else:
