@@ -1,11 +1,6 @@
 from calendar import monthrange
 from datetime import datetime, timedelta
-from .workdays import networkdays
-from dateutil import rrule
-
-
-
-
+from dateutil.relativedelta import relativedelta
 
 
 def days_on_leave_count(start,end):
@@ -19,14 +14,17 @@ def days_on_leave_count(start,end):
 		current_date+=oneday
 	return total_days
 
-def isValidLeavePrediod(remaining_days,start_date,end_date):
+def isValidLeavePrediod(work_start_date,remaining_days,start_date,end_date):
     valid=True
     message="Valid"
-    # Valid leave : valid dateperiod, Enough Days
+    # Valid leave : valid dateperiod, Enough Days, not on probation
 
     #date from to start end in right order
     #not earlier than current date
     #start and end not on weekend
+    if OnProbation(work_start_date,start_date):
+        valid=False
+        message="You wouldn't have worked for three months at the time of your leave"
 
     if start_date > end_date:
         valid=False
@@ -50,11 +48,18 @@ def isValidLeavePrediod(remaining_days,start_date,end_date):
     return (valid,message)
 
 
+def OnProbation(work_start_date,leave_start_date):
+    probation=True
+    months_working = relativedelta(leave_start_date, work_start_date).months
+    if months_working>=3:
+        probation=False
+    return probation
+
 
 
 def daysAvailable(remaining_days,start_date,end_date):
     available=True
-    leave_days=networkdays(start_date,end_date)
+    leave_days=days_on_leave_count(start_date,end_date)
     if leave_days>remaining_days:
         available=False
     return available

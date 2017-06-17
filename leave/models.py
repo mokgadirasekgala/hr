@@ -27,49 +27,42 @@ class Leave(models.Model):
 
 
 
+def taken(n,employee):
+    #number of days taken by employee in the nth month since working
+    
 
 
 class Employee(User):
     start_date = models.DateField()
     @property
     def leave_days_remaining(self):
-        #18 days at the end of each year
-        #no leave within first three months of cycle
+        #1.5 days end of each month
         # #5 days carried over from previous cycle
-        #
-        # accumulated=0
-        # current_cycle_days=0
-        # total_days=0
-        #
-        # current_date = datetime.date.today()
-        # years_working = relativedelta(current_date, self.start_date).years
-        # months = relativedelta(current_date, self.start_date).months #number of months into new cycle
-        #
-        # print "Years" ,years_working
-        # print "Months", months
-        #
-        # if years_working==0 and months<3:#less than 3 months in new cycle
-        #    return 0
-        # if years_working==1: #working for a year not yet 2 years, would have only accumulated 18 days
-        #     accumulated= 18
-        # if years_working>=2: #working for 2 leave cycles, must back track to see if there was accumulation
-        #     for i in range(2,years_working):
-        #
-        #
-        #     leave_taken=Leave.objects.filter(employee_username=self.username)
-        #     for leave in leave_taken:
+        #cycle =year= end of 12 months
+
+        # leave_days(n) -> recursive function giving leave days at the end of n months
+        # taken(n) -> The number of days leave days taken in the period of  nth month since working
+        #leave_days(1)=1.5-taken(1)
+        #leave_days(2)=1.5+leave_days(1)-taken(2)
+        #...
+        #leave_days(11)=1.5+f(10)-taken(11)
+        #On the  month=12 or n  is a multiple of 12), (we are in a going to new  cycle )
+            #current=leave_days(11)-taken(12)
+            #if current between (1-4) -left over from last cycle
+                #leave_days(n)=current
+            #if lcurrent>=5
+                #leave_days(n)=5
+            #if current=0
+                #leave_days(n)=0
+        #next month continue as above leave_days(n)=1.5+leave_days(n-1)-taken(n)
+
+
+
         return 10
 
 
 
 
-
-        #deduct days taken
-            #for every Leave with employee_usernme=thisemployee taken in current cycle
-                 #current_cycle_days=current_cycle_days-leave.days_of_leave
-
-            #check if leave days had been carried over from last year.
-            #for every leave with employee_username =this.employee taken in past cycle
 
 
 
