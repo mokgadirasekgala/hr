@@ -20,19 +20,14 @@ class Leave(models.Model):
     status=models.CharField(max_length=10,default='New', choices=STATUSES)
     employee_username=models.CharField(max_length=30)
 
-    @property
     def days_of_leave(self):
         return days_on_leave_count(self.start_date,self.end_date)
 
 
 class Employee(User):
     start_date = models.DateField()
-    @property
-    def leave_days_remaining(self):
-        return self.leave_days_remaining_at_date(datetime.date.today())
 
 
-    @property
     def get_month_interval(self,n):
         # get tuple giving start and end date on the nth month of employee working
         print self.start_date
@@ -41,7 +36,6 @@ class Employee(User):
         return (self.start_date + s, self.start_date + e)
 
 
-    @property
     def taken(self,n):
         #number of leave, days taken by employee in the nth month since working
         #if the start date of a leave is in the nth month and the end date in the kth month, the leave is taken in the nth month
@@ -54,7 +48,7 @@ class Employee(User):
             days+=leave.days_of_leave
         return days
 
-    @property
+
     def leave_days_remaining_at_date(self,atDate):
         years_working=relativedelta(atDate, self.start_date).years
         months = relativedelta(atDate, self.start_date).months
@@ -62,9 +56,11 @@ class Employee(User):
         total_months=(years_working*12) +months
         return leave_day_at_n_months(total_months,self)
 
+    def leave_days_remaining(self):
+        self.leave_days_remaining_at_date(datetime.date.today())
+ 
 
 
-    @property
     def isOnProbationAtDate(self,atDate):
         probation = True
         months_working = relativedelta(atDate, self.start_date).months
@@ -72,7 +68,6 @@ class Employee(User):
             probation = False
         return probation
 
-    @property
     def isOnProbation(self):
         return self.isOnProbationAtDate(datetime.date.today())
 
