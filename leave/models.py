@@ -24,6 +24,7 @@ class Leave(models.Model):
         return days_on_leave_count(self.start_date,self.end_date)
 
 
+
 class Employee(User):
     start_date = models.DateField()
 

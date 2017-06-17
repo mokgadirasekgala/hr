@@ -29,6 +29,7 @@ def create_employee(request): #for hr admin
 
 @login_required(login_url="login/")
 def index(request):
+
     leave_requests=Leave.objects.filter(employee_username=request.user.username)
     if len(leave_requests)==0:
         leave_requests=None
@@ -43,7 +44,7 @@ def index(request):
     return render(request,'leave/index.html',context)
 
 
-
+@login_required(login_url="login/")
 def log_leave(request):
     form = LogLeaveForm(request.POST)
     emp = Employee.objects.get(username=request.user.username)
