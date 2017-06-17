@@ -2,20 +2,31 @@ from calendar import monthrange
 from datetime import datetime, timedelta
 from .workdays import networkdays
 
-#Valid leave : Not in first three months,valid dateperiod, Enough Days
 
 
-def isValidLeavePrediod(work_start,remaining_days,start_date,end_date):
+
+def isValidLeavePrediod(remaining_days,start_date,end_date):
     valid=True
     message="Valid"
+    # Valid leave : valid dateperiod, Enough Days
 
-    if not ProbationPeriodOver(work_start,start_date):
-        valid=False
-        message="You would have not completed 3 months at that date"
+    #date from to start end in right order
+    #not earlier than current date
+    #start and end not on weekend
 
-    if not validDatePeriod(start_date,end_date):
+    if start_date > end_date:
         valid=False
         message="Start date has to be before end date"
+
+
+    if start_date<datetime.date.today():
+        #assuming all leave must be booked prior to day leave is taken
+        valid=False
+        message="Start date has to be later than today"
+
+    if start_date.weekday()>=5 or end_date.weekday()>=5:#saturday or sunday
+        valid=False
+        messae="Leave can't start or end on a weekend day"
 
     if not daysAvailable(remaining_days,start_date,end_date):
         valid=False
@@ -25,37 +36,6 @@ def isValidLeavePrediod(work_start,remaining_days,start_date,end_date):
     return (valid,message)
 
 
-
-
-def monthdelta(d1, d2):
-    delta = 0
-    while True:
-        mdays = monthrange(d1.year, d1.month)[1]
-        d1 =d1+ timedelta(days=mdays)
-        if d1 <= d2:
-            delta += 1
-        else:
-            break
-    return delta
-
-
-
-
-
-def ProbationPeriodOver(work_startdate,leave_startdate):
-    over= True
-    months_worked=monthdelta(work_startdate,leave_startdate)
-    if months_worked<3:
-        over=False
-    return over
-
-def validDatePeriod(start_date,end_date):
-    #from to start logical
-    #not on a weekend
-    valid=True
-    if start_date>end_date:
-        valid=False
-    return valid
 
 
 def daysAvailable(remaining_days,start_date,end_date):

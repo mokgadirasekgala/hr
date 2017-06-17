@@ -53,7 +53,7 @@ def log_leave(request):
             startdate=form.cleaned_data['startdate']
             enddate=form.cleaned_data['enddate']
 
-            validated=isValidLeavePrediod(emp.start_date,emp.leave_days_remaining,startdate,enddate)
+            validated=isValidLeavePrediod(emp.leave_days_remaining,startdate,enddate)
             if validated[0]:
                 messages.success(request,'Leave Logged for Approval')
                 return redirect('/')

@@ -1,7 +1,10 @@
 {% extends 'leave/base.html' %}
 
 {% block content %}
-    <h1>HR Admin Use Only </h1>
+    <div class="jumbotron">
+        <h1>HR Admin Use Only </h1>
+    </div>
+
 
 
     {% if messages %}
@@ -38,6 +41,8 @@
         <button type="submit" class="btn btn-lg btn-primary">Create Employee</button>
 
     </form>
+    <a  class="label label-default"  href="/login">LOGIN EMPLOYEE</a>
+
 
 {% endblock %}
 
