@@ -31,15 +31,16 @@ def create_employee(request): #for hr admin
 def index(request):
 
     leave_requests=Leave.objects.filter(employee_username=request.user.username)
+    emp = Employee.objects.get(username=request.user.username)
     if len(leave_requests)==0:
         leave_requests=None
-    emp = Employee.objects.get(username=request.user.username)
+
     context = {
-        'days_remaining':emp.leave_days_remaining,
+        'days_remaining':emp.leave_days_remaining(),
         'leave_requests':leave_requests,
-        'username': request.user.username,
-        'first_name':request.user.first_name,
-        'last_name':request.user.last_name
+        'username': emp.username,
+        'first_name':emp.first_name,
+        'last_name':emp.last_name
     }
     return render(request,'leave/index.html',context)
 
