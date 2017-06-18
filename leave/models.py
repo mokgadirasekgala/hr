@@ -32,14 +32,18 @@ class Employee(User):
 
     def get_month_interval(self,n):
         # get tuple giving start and end date on the nth month of employee working
+        #if you start work 1st Jan 2017
+        #n=1, 1 Jan-30 Jan
+        #n=2, 1 Feb 2017- 29Feb
         s = relativedelta(months=n - 1)
         e = relativedelta(months=n)
-        return (self.start_date + s, self.start_date + e)
+        day=timedelta(days=1)
+        return (self.start_date + s, self.start_date + e-day)
 
     def days_taken_in_interval(self,period_start,period_end):
         #days of leave taken from start date to end
         leave_taken = Leave.objects.filter(employee_username=self.username, start_date__gte=period_start,
-                                           start_date__lt=period_end)
+                                           start_date__lte=period_end)
         days = 0
         for leave in leave_taken:
             days += leave.days_of_leave()
@@ -66,9 +70,10 @@ class Employee(User):
 
         remaining=leave_day_at_n_months(total_months,self)
         #you could have taken leave in the last days before the month ends
-        print remaining
         delta=timedelta(days=-days)
         extra_leave_days=self.days_taken_in_interval(atDate+delta,atDate)
+
+
 
 
         return remaining-extra_leave_days
@@ -82,10 +87,11 @@ class Employee(User):
 
 
     def isOnProbationAtDate(self,atDate):
-        probation = True
+        probation = False
+        years_working=relativedelta(atDate, self.start_date).years
         months_working = relativedelta(atDate, self.start_date).months
-        if months_working >= 3:
-            probation = False
+        if months_working < 3  and years_working<1 :
+            probation = True
         return probation
 
     def isOnProbation(self):

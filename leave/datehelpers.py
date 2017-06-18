@@ -30,14 +30,14 @@ def isValidDatePrediod(start_date,end_date):
         message="Start date has to be before end date"
 
 
-    if start_date<datetime.date.today():
-        #assuming all leave must be booked prior to day leave is taken
-        valid=False
-        message="Start date has to be later than today"
+    # if start_date<datetime.date.today():
+    #     #assuming all leave must be booked prior to day leave is taken
+    #     valid=False
+    #     message="Start date has to be later than today"
 
     if start_date.weekday()>=5 or end_date.weekday()>=5:#saturday or sunday
         valid=False
-        messae="Leave can't start or end on a weekend day"
+        message="Leave can't start or end on a weekend day"
 
     return (valid,message)
 

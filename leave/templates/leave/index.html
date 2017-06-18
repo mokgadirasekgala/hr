@@ -22,7 +22,7 @@
     {% endif %}
 
     <h3>Hi {{ emp.username }}</h3>
-    <p>{{ emp.leave_days_remaining }} leave days remaining  Currently</p>
+    <p>{{ emp.leave_days_remaining }} leave days remaining  Currently (till {{ today }})</p>
     <p>{{ furture_leave_remaining}} leave days remaining  if all requested future leaves are taken</p>
     <a  class="label label-default"  href="leave">REQUEST NEW LEAVE</a>
 
