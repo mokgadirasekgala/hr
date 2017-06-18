@@ -4,6 +4,7 @@ from datehelpers import isPublicHoliday
 
 # Create your tests here.
 class DatehelpersTests(TestCase):
+    #tests on dte helpe functions
 
     def test_is_public_holiday_with_holiday(self):
         """
@@ -23,3 +24,7 @@ class DatehelpersTests(TestCase):
                                              (26, 12)]
         normal = datetime.date(2017, 6, 15)
         self.assertIs(isPublicHoliday(normal), False)
+
+
+#Test Views
+

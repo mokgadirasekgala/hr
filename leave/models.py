@@ -62,8 +62,9 @@ class Employee(User):
 
     def leave_days_remaining_at_date(self,atDate):
         leave_requests = Leave.objects.filter(employee_username=self.username).order_by('-start_date')
-        if atDate<leave_requests[0].start_date: #booking for earlier date, all later leave dates included
-            atDate=leave_requests[0].start_date
+        if leave_requests:
+            if atDate<leave_requests[0].start_date: #booking for earlier date, all later leave dates included
+                atDate=leave_requests[0].start_date
         years_working=relativedelta(atDate, self.start_date).years
         months = relativedelta(atDate, self.start_date).months #months working excluding years
         days= relativedelta(atDate, self.start_date).days
@@ -121,6 +122,8 @@ class Employee(User):
         validPeriod=isValidDatePrediod(start_date,end_date)
         if not validPeriod[0]:
             return (False,validPeriod[1])
+        if start_date<self.start_date:
+            return (False,"You hadn't even started working yet")
         if self.isOnProbationAtDate(start_date):
             return(False,"You will still be on probation on leave date")
         if not daysAreAvailable(self.leave_days_remaining_at_date(start_date),start_date,end_date):
