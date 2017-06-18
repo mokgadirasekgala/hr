@@ -61,6 +61,9 @@ class Employee(User):
 
 
     def leave_days_remaining_at_date(self,atDate):
+        leave_requests = Leave.objects.filter(employee_username=self.username).order_by('-start_date')
+        if atDate<leave_requests[0].start_date: #booking for earlier date, all later leave dates included
+            atDate=leave_requests[0].start_date
         years_working=relativedelta(atDate, self.start_date).years
         months = relativedelta(atDate, self.start_date).months #months working excluding years
         days= relativedelta(atDate, self.start_date).days
@@ -82,6 +85,16 @@ class Employee(User):
 
     def leave_days_remaining(self):
         return self.leave_days_remaining_at_date(datetime.date.today())
+
+    def leave_not_taken(self):
+        #if you have already started taking the leave, the leave is considered taken even if not all days taken
+        leave_requests = Leave.objects.filter(employee_username=self.username).order_by('-start_date')
+        days=0
+        for leave in leave_requests:
+            if leave.start_date>datetime.date.today():
+                days+=leave.days_of_leave()
+        return days
+
 
 
 
