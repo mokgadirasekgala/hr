@@ -3,6 +3,12 @@ import datetime
 from datetime import timedelta
 
 
+def isPublicHoliday(mydate):
+    public_holidays = [(1, 1), (21, 3), (14, 4), (17, 4), (27, 4), (1, 5), (16, 6), (9, 8), (24, 9), (16, 12), (25, 12),
+                       (26, 12)]
+    if (mydate.day,mydate.month) in public_holidays:
+        return True
+    return False
 
 
 def days_on_leave_count(start,end):
@@ -11,7 +17,7 @@ def days_on_leave_count(start,end):
 	oneday=timedelta(days=1)
 	current_date=start
 	while current_date<=end:
-		if current_date.weekday()>=5 or (current_date.day,current_date.month) in public_holidays: #day is weekend or public holiday
+		if current_date.weekday()>=5 or isPublicHoliday(current_date): #day is weekend or public holiday
 			total_days-=1
 		current_date+=oneday
 	return total_days
