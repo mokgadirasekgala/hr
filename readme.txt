@@ -1,3 +1,12 @@
+TO RUN
+clone repo
+run on terminal in dir-python manage.py makemigrations
+run on terminal in dir-python manage.py migrate
+
+on localhost:8000/newemploye Create an rmploye
+login employee localhost:8000/login
+
+you can log leave an see on dashboard
 
 
 
