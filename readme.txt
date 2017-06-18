@@ -1,5 +1,10 @@
+
+
+
 ASSUMPTIONS
 1. You can book leave  for a date before current date (sick leave taken before booking)
+2.nth month a person is working is the period fro relative start date to relative end date -1 day
+    example: If i start working 1 March 2016, my 1st month interval [1 March, 31 March) and 2nd Month interval [1 April,30 April)
 
 
 
